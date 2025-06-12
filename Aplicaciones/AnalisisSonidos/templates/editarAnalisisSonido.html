@@ -1,0 +1,78 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 bg-light">
+        <h1>Editar Análisis de Sonido</h1>
+        <form action="/analisissonido/procesarEdicionAnalisisSonido/{{ analisis.id }}" id="frm_editar_analisis" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ analisis.id }}">
+
+            <label for="grabacion">Grabación:</label>
+            <select class="form-control" name="grabacion" id="grabacion">
+                {% for g in grabaciones %}
+                <option value="{{ g.id }}" {% if g.id == analisis.grabacion.id %}selected{% endif %}>{{ g }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="investigador">Investigador:</label>
+            <input class="form-control" type="text" name="investigador" id="investigador" value="{{ analisis.investigador }}">
+            <br><br>
+
+            <label for="fecha_analisis">Fecha de Análisis:</label>
+            <input class="form-control" type="date" name="fecha_analisis" id="fecha_analisis" value="{{ analisis.fecha_analisis|date:'Y-m-d' }}">
+            <br><br>
+
+            <label for="observaciones">Observaciones:</label>
+            <textarea class="form-control" name="observaciones" id="observaciones" rows="3">{{ analisis.observaciones }}</textarea>
+            <br><br>
+
+            <label for="pdf_resultados">Archivo PDF (dejar en blanco para mantener el actual):</label>
+            <input class="form-control" type="file" name="pdf_resultados" id="pdf_resultados" accept="application/pdf">
+            <br><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-outline-danger" href="/analisissonido">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+<br><br><br>
+
+<script>
+    $("#frm_editar_analisis").validate({
+        rules: {
+            "grabacion": {
+                required: true
+            },
+            "investigador": {
+                required: true
+            },
+            "fecha_analisis": {
+                required: true
+            },
+            "observaciones": {
+                required: true
+            }
+        },
+        messages: {
+            "grabacion": {
+                required: "Por favor seleccione una grabación"
+            },
+            "investigador": {
+                required: "Por favor ingrese el nombre del investigador"
+            },
+            "fecha_analisis": {
+                required: "Por favor ingrese la fecha del análisis"
+            },
+            "observaciones": {
+                required: "Por favor ingrese las observaciones"
+            }
+        }
+    });
+</script>
+
+{% endblock %}
