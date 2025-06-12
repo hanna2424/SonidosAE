@@ -1,0 +1,69 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<br>
+<h1 style="text-align: center;">Listado de Especie Sonido</h1>
+<hr>
+<br>
+<div class="text-end">
+    <a href="nuevaEspecieSonido" class="btn btn-dark bg-success text-dark"><b>Agregar Especie Sonido</b></a>
+</div>
+<br>
+<br>
+<table class="table table-bordered table-striped table-hover">
+    <thead class="bg-success">
+        <tr>
+            <th>ID</th>
+            <th>Especie</th>
+            <th>Tipo de Sonido</th>
+            <th>Descripción</th>
+            <th>PDF Estudio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for EspecieTemporal in especiesonidos %}
+            <tr>
+                <td>{{EspecieTemporal.id}}</td>
+                <td>{{EspecieTemporal.especie.nombre}}</td>
+                <td>{{EspecieTemporal.tipo_sonido}}</td>
+                <td>{{EspecieTemporal.descripcion}}</td>
+                <td>
+                    {% if EspecieTemporal.pdf_estudio %}
+                        <a href="{{EspecieTemporal.pdf_estudio.url}}" target="_blank">Ver PDF</a>
+                    {% else %}
+                        No disponible
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="editarEspecieSonido/{{EspecieTemporal.id}}" class="btn btn-outline-warning">
+                        <i class="fa fa-pen">editar</i>
+                    </a>
+                    <a href="#" class="btn btn-outline-danger" onclick="confirmarEliminacion('{{ EspecieTemporal.id }}')">
+                        <i class="fa fa-trash">eliminar</i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<script>
+  function confirmarEliminacion(id) {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡Una vez eliminada no podrás recuperar la información!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `eliminarEspecieSonido/${id}`;
+      }
+    });
+  }
+</script>
+
+{% endblock %}

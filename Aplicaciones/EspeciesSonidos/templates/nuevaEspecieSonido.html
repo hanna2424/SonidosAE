@@ -1,0 +1,76 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+
+<div class="row">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6 bg-light">
+        <h1>Nueva Especie Sonido</h1>
+        <form action="guardarEspecieSonido" id="frm_nueva_especie_sonido" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="especie">Especie:</label>
+            <select class="form-control" name="especie" id="especie">
+                <option value="">Seleccione una especie</option>
+                {% for especie in especies %}
+                <option value="{{ especie.id }}">{{ especie.nombre }}</option>
+                {% endfor %}
+            </select>
+            <br><br><br>
+
+            <label for="tipo_sonido">Tipo de Sonido:</label>
+            <input class="form-control" type="text" name="tipo_sonido" id="tipo_sonido">
+            <br><br><br>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" name="descripcion" id="descripcion" rows="3"></textarea>
+            <br><br><br>
+
+            <label for="pdf_estudio">PDF Estudio:</label>
+            <input class="form-control" type="file" name="pdf_estudio" id="pdf_estudio">
+            <br><br><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-outline-danger" href="/especiesonido">Cancelar</a>
+        </form>
+    </div>
+
+    <div class="col-md-3"></div>
+</div><br><br><br>
+
+<script>
+    $("#frm_nueva_especie_sonido").validate({
+        rules: {
+            "especie": {
+                required: true
+            },
+            "tipo_sonido": {
+                required: true
+            },
+            "descripcion": {
+                required: true
+            },
+            "pdf_estudio": {
+                required: true,
+                extension: "pdf"
+            }
+        },
+        messages: {
+            "especie": {
+                required: "Por favor seleccione una especie"
+            },
+            "tipo_sonido": {
+                required: "Por favor ingrese el tipo de sonido"
+            },
+            "descripcion": {
+                required: "Por favor ingrese una descripción"
+            },
+            "pdf_estudio": {
+                required: "Por favor suba el archivo PDF",
+                extension: "Solo se permiten archivos .pdf"
+            }
+        }
+    });
+</script>
+
+{% endblock %}
