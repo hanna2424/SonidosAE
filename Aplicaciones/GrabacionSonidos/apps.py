@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class BrabacionsonidosConfig(AppConfig):
+class GrabacionsonidosConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'BrabacionSonidos'
+    name = 'GrabacionSonidos'
