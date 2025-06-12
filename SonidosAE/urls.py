@@ -26,7 +26,7 @@ urlpatterns = [
     #path('', include('Aplicaciones.AnalisisSonidos.urls')),
     path('', include('Aplicaciones.Especies.urls')),
     path('especiesonido/', include('Aplicaciones.EspeciesSonidos.urls')),
-    #path('', include('Aplicaciones.GrabacionSonidos.urls')),
+    path('grabacionsonido/', include('Aplicaciones.GrabacionSonidos.urls')),
 ]
 
 if settings.DEBUG:urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

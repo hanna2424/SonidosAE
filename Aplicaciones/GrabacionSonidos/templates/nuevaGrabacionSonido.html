@@ -1,0 +1,77 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 bg-light">
+        <h1>Nueva Grabación de Sonido</h1>
+        <form action="guardarGrabacionSonido" id="frm_nueva_grabacion" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="especie_sonido">Especie Sonido:</label>
+            <select class="form-control" name="especie_sonido" id="especie_sonido">
+                <option value="">Seleccione una especie sonido</option>
+                {% for especie_sonido in especies_sonido %}
+                    <option value="{{ especie_sonido.id }}">{{ especie_sonido.tipo_sonido }} ({{ especie_sonido.especie.nombre }})</option>
+                {% endfor %}
+            </select>
+            <br><br><br>
+
+            <label for="fecha">Fecha:</label>
+            <input class="form-control" type="date" name="fecha" id="fecha">
+            <br><br><br>
+
+            <label for="ubicacion">Ubicación:</label>
+            <input class="form-control" type="text" name="ubicacion" id="ubicacion">
+            <br><br><br>
+
+            <label for="archivo_audio">Archivo de Audio:</label>
+            <input class="form-control" type="file" name="archivo_audio" id="archivo_audio" accept="audio/*">
+            <br><br><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-outline-danger" href="/grabacionsonido">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div><br><br><br>
+
+<script>
+    $("#frm_nueva_grabacion").validate({
+        rules: {
+            "especie_sonido": {
+                required: true
+            },
+            "fecha": {
+                required: true,
+                date: true
+            },
+            "ubicacion": {
+                required: true
+            },
+            "archivo_audio": {
+                required: true,
+                extension: "mp3|wav|ogg|m4a"
+            }
+        },
+        messages: {
+            "especie_sonido": {
+                required: "Por favor seleccione una especie sonido"
+            },
+            "fecha": {
+                required: "Por favor ingrese la fecha",
+                date: "Por favor ingrese una fecha válida"
+            },
+            "ubicacion": {
+                required: "Por favor ingrese la ubicación"
+            },
+            "archivo_audio": {
+                required: "Por favor seleccione un archivo de audio",
+                extension: "Formatos permitidos: mp3, wav, ogg, m4a"
+            }
+        }
+    });
+</script>
+
+{% endblock %}
