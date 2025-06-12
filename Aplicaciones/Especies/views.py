@@ -17,14 +17,14 @@ def guardarEspecie(request):
     tipo_especie = request.POST["tipo_especie"]
     nueva = Especie.objects.create(nombre=nombre, tipo_especie=tipo_especie)
     messages.success(request, "Especie agregada exitosamente")
-    return redirect('/especie')
+    return redirect('/')
 
 
 def eliminarEspecie(request, id):
     especieEliminar = Especie.objects.get(id=id)
     especieEliminar.delete()
     messages.success(request, "Especie eliminada exitosamente")
-    return redirect('/especie')
+    return redirect('/')
 
 
 def editarEspecie(request, id):
@@ -42,4 +42,4 @@ def procesarEdicionEspecie(request, id):
     especie.tipo_especie = tipo_especie
     especie.save()
     messages.success(request, "Especie actualizada exitosamente")
-    return redirect('/especie')
+    return redirect('/')

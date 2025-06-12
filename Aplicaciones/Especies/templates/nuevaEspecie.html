@@ -1,0 +1,47 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 bg-light">
+        <h1>Nueva Especie</h1>
+        <form action="guardarEspecie" id="frm_nueva_especie" method="post">
+            {% csrf_token %}
+            <label for="nombre_comun">Nombre:</label>
+            <input class="form-control" type="text" name="nombre" id="nombre">
+            <br><br><br>
+
+            <label for="nombre_cientifico">Tipo de especie:</label>
+            <input class="form-control" type="text" name="tipo_especie" id="tipo_especie">
+            <br><br><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-outline-danger" href="/">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div><br><br><br>
+
+<script>
+    $("#frm_nueva_especie").validate({
+        rules: {
+            "nombre": {
+                required: true
+            },
+            "tipo_especie": {
+                required: true
+            }
+        },
+        messages: {
+            "nombre": {
+                required: "Por favor ingrese el nombre común"
+            },
+            "tipo_especie": {
+                required: "Por favor ingrese el tipo de especie"
+            }
+        }
+    });
+</script>
+
+{% endblock %}

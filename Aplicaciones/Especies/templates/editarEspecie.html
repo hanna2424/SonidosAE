@@ -1,0 +1,49 @@
+{% extends './plantilla.html' %}
+{% block contenido %}
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 bg-light">
+        <h1>Editar Especie</h1>
+        <form action="/procesarEdicionEspecie/{{ especieEditar.id }}" id="frm_editar_especie" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ especieEditar.id }}">
+
+            <label for="nombre_comun">Nombre:</label>
+            <input class="form-control" type="text" name="nombre" id="nombre" value="{{ especieEditar.nombre }}">
+            <br><br><br>
+
+            <label for="nombre_cientifico">Tipo de Especie:</label>
+            <input class="form-control" type="text" name="tipo_especie" id="tipo_especie" value="{{ especieEditar.tipo_especie }}">
+            <br><br><br>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a class="btn btn-outline-danger" href="/">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div><br><br><br>
+
+<script>
+    $("#frm_editar_especie").validate({
+        rules: {
+            "nombre_comun": {
+                required: true
+            },
+            "tipo_especie": {
+                required: true
+            }
+        },
+        messages: {
+            "nombre": {
+                required: "Por favor ingrese el nombre común"
+            },
+            "tipo_especie": {
+                required: "Por favor ingrese el tipo de especie"
+            }
+        }
+    });
+</script>
+
+{% endblock %}
